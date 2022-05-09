@@ -10,4 +10,15 @@ button {
     font-weight: bold;
     font-size: 1.25rem;
     padding: 20px;
+    width: 150px;
 }
+
+button:hover {
+    background-color: coral;
+    border: 1px solid black;
+}
+
+#scoreMessage {
+    margin: 25px 0px;
+}
+
