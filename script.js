@@ -7,6 +7,7 @@ const restart = document.getElementById("restart");
 let roundWinner = "";
 let playerScore = 0;
 let computerScore = 0;
+let tieScore = 0;
 
 function startGame() {
   rockBtn.addEventListener("click", () => {
@@ -25,6 +26,7 @@ function startGame() {
 
 function playRound(playerSelection) {
   const computerSelection = computerSelect();
+  refreshGameImages(playerSelection, computerSelection);
   if (playerSelection === computerSelection) {
     roundWinner = "tie";
   }
@@ -60,7 +62,7 @@ function updateScoreMessage(winner, playerSelection, computerSelection) {
       playerSelection
     )} beats ${capitalizeFirstLetter(
       computerSelection
-    )}. Player ${playerScore} : Computer ${computerScore}.`;
+    )}. Player ${playerScore} : Computer ${computerScore} : Tie ${tieScore}`;
     if (playerScore === 5) {
       scoreMessage.textContent = `Player Won! ${playerScore} : ${computerScore}`;
       refreshPage();
@@ -72,18 +74,19 @@ function updateScoreMessage(winner, playerSelection, computerSelection) {
       playerSelection
     )} is beaten by ${capitalizeFirstLetter(
       computerSelection
-    )}. Player ${playerScore} : Computer ${computerScore}.`;
+    )}. Player ${playerScore} : Computer ${computerScore} : Tie ${tieScore}`;
     if (computerScore === 5) {
       scoreMessage.textContent = `Computer Won! ${computerScore} : ${playerScore}`;
       refreshPage();
     }
   }
   if (winner === "tie") {
+    tieScore++;
     scoreMessage.textContent = `${capitalizeFirstLetter(
       playerSelection
     )} ties with ${capitalizeFirstLetter(
       computerSelection
-    )}. Player ${playerScore} : Computer ${computerScore}.`;
+    )}. Player ${playerScore} : Computer ${computerScore} : Tie ${tieScore}`;
   }
   return;
 }
@@ -95,7 +98,7 @@ function capitalizeFirstLetter(string) {
 function refreshPage() {
   restart.setAttribute(
     "style",
-    "border: 1px solid black; background-color: green; width: 150px; padding: 10px 0px; text-align: center;"
+    "border: 1px solid black; background-color: green; width: 150px; padding: 10px 0px; text-align: center; border-radius: 10px;"
   );
   restart.textContent = "RESTART!";
   restart.addEventListener("click", () => {
@@ -112,6 +115,26 @@ function refreshPage() {
     restart.style.cursor = "default";
     restart.style.backgroundColor = "green";
   });
+}
+
+function refreshGameImages(humanPlay, computerPlay) {
+  const humanImage = document.querySelector(".player-img img");
+  if (humanPlay === "rock") {
+    humanImage.setAttribute("src", "images/rock-fffdfa.png");
+  } else if (humanPlay === "paper") {
+    humanImage.setAttribute("src", "images/paper-fffdfa.png");
+  } else {
+    humanImage.setAttribute("src", "images/scissors-fffdfa.png");
+  }
+
+  const cpuImage = document.querySelector(".computer-img img");
+  if (computerPlay === "rock") {
+    cpuImage.setAttribute("src", "images/rock-fffdfa.png");
+  } else if (computerPlay === "paper") {
+    cpuImage.setAttribute("src", "images/paper-fffdfa.png");
+  } else {
+    cpuImage.setAttribute("src", "images/scissors-fffdfa.png");
+  }
 }
 
 startGame();
